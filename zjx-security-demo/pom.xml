@@ -21,6 +21,12 @@
             <artifactId>zjx-security-browser</artifactId>
             <version>${zjx.security.version}</version>
         </dependency>
+
+        <!--添加测试依赖,写测试用例-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
     </dependencies>
 
     <!--springboot打包插件-->
