@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>zjx-security-browser</artifactId>
+    <packaging>jar</packaging>
+    <!--声明父工程-->
+    <parent>
+        <groupId>com.zjx.security</groupId>
+        <artifactId>zjx-security</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../zjx-security</relativePath>
+    </parent>
+    <dependencies>
+        <!--引入核心依赖-->
+        <dependency>
+            <groupId>com.zjx.security</groupId>
+            <artifactId>zjx-security-core</artifactId>
+            <version>${zjx.security.version}</version>
+        </dependency>
+        <!--提供集群环境下的session依赖-->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session</artifactId>
+        </dependency>
+    </dependencies>
+</project>

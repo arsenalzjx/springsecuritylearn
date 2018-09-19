@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql:///securitydemo?useSSL=true
+    username: root
+    password: lawpress
+  session:
+    store-type: none
+security:
+  basic:
+    enabled: false
