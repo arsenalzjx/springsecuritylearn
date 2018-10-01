@@ -8,4 +8,4 @@ spring:
     store-type: none
 security:
   basic:
-    enabled: false
+    enabled: true
