@@ -33,10 +33,13 @@ public class QueueListener implements ApplicationListener<ContextRefreshedEvent>
         new Thread(() -> {
             while (true) {
                 if (StringUtils.isNotBlank(mockQueue.getCompleteOrder())) {
-                    //当模拟消息队列中完成的订单有值时,处理业务
+                    //当模拟消息队列中有完成的订单的消息时,取出消息
                     String orderNumber = mockQueue.getCompleteOrder();
                     logger.info("返回订单处理结果:" + orderNumber);
+                    //根据消息从deferredResultHolder中取出对应DeferredResult
+                    //并对DeferredResult设置返回结果
                     deferredResultHolder.getMap().get(orderNumber).setResult("place order success");
+                    //将处理完后的消息从消息队列中清楚
                     mockQueue.setCompleteOrder(null);
                 } else {
                     try {

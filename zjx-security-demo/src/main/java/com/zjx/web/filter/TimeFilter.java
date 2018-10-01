@@ -2,7 +2,6 @@ package com.zjx.web.filter;
 
 import javax.servlet.*;
 import java.io.IOException;
-import java.util.Date;
 
 /**
  * <p>@ClassName: TimeFilter </p>
@@ -21,9 +20,9 @@ public class TimeFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         System.out.println("time filter start");
-        long start = new Date().getTime();
+        long start = System.currentTimeMillis();
         chain.doFilter(request,response);
-        System.out.println("time filter 耗时:"+(new Date().getTime()-start));
+        System.out.println("time filter 耗时:"+(System.currentTimeMillis()-start));
         System.out.println("time filter finish");
 
     }

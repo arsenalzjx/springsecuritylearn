@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Date;
 
 /**
  * <p>@ClassName: FileController </p>
@@ -33,7 +32,7 @@ public class FileController {
         System.out.println(file.getSize());
         //保存文件的本地地址
         String folder = "E:\\Workspace\\intellj_idea\\springsecuritylearn\\zjx-security-demo\\src\\main\\java\\com\\zjx\\web\\controller";
-        File localFile = new File(folder, new Date().getTime() + ".txt");
+        File localFile = new File(folder, System.currentTimeMillis()+ ".txt");
         //保存到本地
         file.transferTo(localFile);
         //如果保存到远端可通过获取输入流方式,再存储

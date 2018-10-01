@@ -25,16 +25,18 @@ public class MockQueue {
     }
 
     public void setPlaceOrder(String placeOrder) throws Exception {
-        //创建一个新的线程模拟消息队列接受消息
+        //创建一个新的线程模拟消息队列接受消息处理业务并存入处理结果消息
         new Thread(() -> {
             logger.info("接到下单请求:"+placeOrder);
             try {
+                logger.info("处理下单请求:"+placeOrder);
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            this.completeOrder = placeOrder;
             logger.info("下单请求处理完毕:"+placeOrder);
+            logger.info("处理完成消息到队列:"+placeOrder);
+            this.completeOrder = placeOrder;
         }).start();
     }
 

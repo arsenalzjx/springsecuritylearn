@@ -23,7 +23,7 @@ public class ControllerExceptionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String,Object> handlerUserNotExistException(UserNotExistException ex){
-        Map<String,Object> result = new HashMap<>();
+        Map<String,Object> result = new HashMap<>(2);
         result.put("id",ex.getId());
         result.put("message",ex.getMessage());
         return result;

@@ -31,7 +31,7 @@ public class AsyncController {
         String orderNumber = RandomStringUtils.randomNumeric(8);
         //将随机生成的订单号放了模拟消息队列中,表示产生一个订单消息
         mockQueue.setPlaceOrder(orderNumber);
-        //创建一个单号
+        //创建DeferredResult,并将其放入deferredResultHolder中管理
         DeferredResult<String> result = new DeferredResult<>();
         deferredResultHolder.getMap().put(orderNumber,result);
 
@@ -49,6 +49,7 @@ public class AsyncController {
 //        };
 
         logger.info("主线程结束");
+        //释放主线程
         return result;
     }
 

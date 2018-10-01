@@ -1,5 +1,7 @@
 package com.zjx.dto;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * <p>@ClassName: UserQueryCondition </p>
  * <p>@Description: </p>
@@ -8,9 +10,11 @@ package com.zjx.dto;
  */
 public class UserQueryCondition {
     private String username;
-    
+
+    @ApiModelProperty(value = "用户年龄起始值")
     private Integer age;
-    
+
+    @ApiModelProperty(value = "用户年龄终止值")
     private Integer ageTo;
     
     private String xxx;
