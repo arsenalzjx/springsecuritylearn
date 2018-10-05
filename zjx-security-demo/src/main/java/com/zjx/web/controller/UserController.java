@@ -29,7 +29,7 @@ public class UserController {
 
 
     @PostMapping
-    public User create(@Valid @RequestBody User user/*, BindingResult errors*/){
+    public User create(@Valid @RequestBody User user/*, BindingResult errors*/) {
 
         /*if(errors.hasErrors()){
             errors.getAllErrors().stream().forEach(error -> System.out.println(error.getDefaultMessage()));
@@ -43,12 +43,12 @@ public class UserController {
     }
 
     @PutMapping("/{id:\\d+}")
-    public User update(@Valid @RequestBody User user, BindingResult errors){
+    public User update(@Valid @RequestBody User user, BindingResult errors) {
 
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             errors.getAllErrors().stream().forEach(error -> {
-                FieldError fieldError = (FieldError)error;
-                String message = fieldError.getField() +" " +error.getDefaultMessage();
+                FieldError fieldError = (FieldError) error;
+                String message = fieldError.getField() + " " + error.getDefaultMessage();
                 System.out.println(message);
             });
         }
@@ -61,15 +61,15 @@ public class UserController {
     }
 
     @DeleteMapping("/{id:\\d+}")
-    public void delete(@PathVariable String id){
+    public void delete(@PathVariable String id) {
         System.out.println(id);
     }
 
     @GetMapping
     @JsonView(User.UserSimpleView.class)
     @ApiOperation(value = "用户查询服务")
-    public List<User> query(UserQueryCondition condition,@PageableDefault(page = 2,size = 10,sort = "username,asc") Pageable pageable){
-        System.out.println(ReflectionToStringBuilder.toString(condition,ToStringStyle.MULTI_LINE_STYLE));
+    public List<User> query(UserQueryCondition condition, @PageableDefault(page = 2, size = 10, sort = "username,asc") Pageable pageable) {
+        System.out.println(ReflectionToStringBuilder.toString(condition, ToStringStyle.MULTI_LINE_STYLE));
         System.out.println(pageable.getPageSize());
         System.out.println(pageable.getPageNumber());
         System.out.println(pageable.getSort());
@@ -82,7 +82,7 @@ public class UserController {
 
     @GetMapping("/{id:\\d+}")
     @JsonView(User.UserdetailView.class)
-    public User getInfo(@PathVariable @ApiParam(value = "用户ID") String id){
+    public User getInfo(@PathVariable @ApiParam(value = "用户ID") String id) {
         System.out.println("进入getInfo服务");
         User user = new User();
         user.setUsername("tom");
