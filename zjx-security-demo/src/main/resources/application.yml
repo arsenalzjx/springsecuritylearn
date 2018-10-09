@@ -9,3 +9,9 @@ spring:
 security:
   basic:
     enabled: true
+
+zjx:
+  security:
+    browser:
+#      loginPage: /demo-signIn.html
+      loginType: JSON
