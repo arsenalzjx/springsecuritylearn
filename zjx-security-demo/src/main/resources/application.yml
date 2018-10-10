@@ -12,6 +12,11 @@ security:
 
 zjx:
   security:
-    browser:
+#    browser:
 #      loginPage: /demo-signIn.html
-      loginType: JSON
+#      loginType: REDIRECT
+    code:
+      image:
+        length: 6
+        width: 100
+        url: /user/*

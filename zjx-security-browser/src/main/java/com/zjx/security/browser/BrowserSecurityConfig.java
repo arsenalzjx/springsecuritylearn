@@ -40,9 +40,13 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        //初始化一个validateCodeFilter
         ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
         validateCodeFilter.setAuthenticationFailureHandler(myAuthenticationFailureHandler);
+        //为validateCodeFilter设置初始化属性
+        validateCodeFilter.setSecurityProperties(securityProperties);
+        //为validateCodeFilter初始化过滤url
+        validateCodeFilter.afterPropertiesSet();
         //http.httpBasic()//使用http默认登录方式
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()//使用表单登录方式
