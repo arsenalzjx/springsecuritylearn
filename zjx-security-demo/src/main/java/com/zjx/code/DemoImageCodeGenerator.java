@@ -2,7 +2,6 @@ package com.zjx.code;
 
 import com.zjx.security.core.validate.code.ImageCode;
 import com.zjx.security.core.validate.code.ValidateCodeGenerator;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 
 /**
@@ -11,7 +10,7 @@ import org.springframework.web.context.request.ServletWebRequest;
  * <p>@Author: zjx</p>
  * <p>@Date: 2018/10/10 16:08</p>
  */
-@Component("imageCodeGenerator")
+//@Component("imageCodeGenerator")
 public class DemoImageCodeGenerator implements ValidateCodeGenerator {
     @Override
     public ImageCode generate(ServletWebRequest request) {

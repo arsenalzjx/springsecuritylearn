@@ -43,8 +43,10 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
         String[] configUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(
                 securityProperties.getCode().getImage().getUrl(), ","
         );
-        for (String configUrl : configUrls) {
-            urls.add(configUrl);
+        if (configUrls != null) {
+            for (String configUrl : configUrls) {
+                urls.add(configUrl);
+            }
         }
         urls.add("/authentication/form");
     }
@@ -53,7 +55,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         boolean action = false;
         for (String url : urls) {
-            if(pathMatcher.match(url,request.getRequestURI())){
+            if (pathMatcher.match(url, request.getRequestURI())) {
                 action = true;
                 break;
             }
