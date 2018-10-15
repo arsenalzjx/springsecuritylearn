@@ -1,6 +1,8 @@
-package com.zjx.security.core.validate.code;
+package com.zjx.security.core.validate.code.sms;
 
 import com.zjx.security.core.properties.SecurityProperties;
+import com.zjx.security.core.validate.code.ValidateCode;
+import com.zjx.security.core.validate.code.ValidateCodeGenerator;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.zjx.code;
 
-import com.zjx.security.core.validate.code.ImageCode;
+import com.zjx.security.core.validate.code.image.ImageCode;
 import com.zjx.security.core.validate.code.ValidateCodeGenerator;
 import org.springframework.web.context.request.ServletWebRequest;
 

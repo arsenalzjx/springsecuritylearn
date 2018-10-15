@@ -1,6 +1,7 @@
 package com.zjx.security.core.validate.code;
 
 import com.zjx.security.core.properties.SecurityProperties;
+import com.zjx.security.core.validate.code.image.ImageCodeGenerator;
 import com.zjx.security.core.validate.code.sms.DefaultSmsCodeSender;
 import com.zjx.security.core.validate.code.sms.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;

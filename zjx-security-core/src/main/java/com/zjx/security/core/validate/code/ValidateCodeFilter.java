@@ -1,6 +1,7 @@
 package com.zjx.security.core.validate.code;
 
 import com.zjx.security.core.properties.SecurityProperties;
+import com.zjx.security.core.validate.code.image.ImageCode;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
@@ -73,7 +74,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
 
     private void validate(ServletWebRequest request) throws ServletRequestBindingException {
         ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(request,
-                ValidateCodeController.SESSION_KEY);
+                "SESSION_KEY_FOR_CODE_IMAGE");
         String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "imageCode");
         if (StringUtils.isBlank(codeInRequest)) {
             throw new ValidateCodeException("验证码的值不能为空");
@@ -82,14 +83,14 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
             throw new ValidateCodeException("验证码不存在");
         }
         if (codeInSession.isExpride()) {
-            sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY);
+            sessionStrategy.removeAttribute(request, "SESSION_KEY_FOR_CODE_IMAGE");
             throw new ValidateCodeException("验证码已过期");
         }
         if (!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
             throw new ValidateCodeException("验证码不匹配");
         }
 
-        sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY);
+        sessionStrategy.removeAttribute(request, "SESSION_KEY_FOR_CODE_IMAGE");
     }
 
     public AuthenticationFailureHandler getAuthenticationFailureHandler() {

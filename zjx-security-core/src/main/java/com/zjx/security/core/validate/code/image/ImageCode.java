@@ -1,4 +1,6 @@
-package com.zjx.security.core.validate.code;
+package com.zjx.security.core.validate.code.image;
+
+import com.zjx.security.core.validate.code.ValidateCode;
 
 import java.awt.image.BufferedImage;
 

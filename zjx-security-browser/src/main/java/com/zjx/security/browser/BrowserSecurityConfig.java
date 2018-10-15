@@ -82,7 +82,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()//之后的配置都是授权配置
                     .antMatchers("/authentication/require"//对跳转到登录页面的请求放行
                             , securityProperties.getBrowser().getLoginPage()//对配置中自定义的登录页面进行放行
-                            , "/code/image")//对图形验证码放行
+                            , "/code/*")//对图形验证码放行
                     .permitAll()//使用匹配器将登录页面进行允许访问
                     .anyRequest()//对所有请求都验证权限
                     .authenticated()//都需要身份认证
