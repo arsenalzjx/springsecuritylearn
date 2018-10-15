@@ -9,5 +9,5 @@ import org.springframework.web.context.request.ServletWebRequest;
  * <p>@Date: 2018/10/10 15:04</p>
  */
 public interface ValidateCodeGenerator {
-    ImageCode generate(ServletWebRequest request);
+    ValidateCode generate(ServletWebRequest request);
 }
