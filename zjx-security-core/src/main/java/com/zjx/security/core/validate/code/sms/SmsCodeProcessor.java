@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
-import javax.servlet.ServletRequest;
-
 /**
  * <p>@ClassName: ImageCodeProcessor </p>
  * <p>@Description: </p>
@@ -26,7 +24,7 @@ public class SmsCodeProcessor extends AbstractValidateCodeProcessor<ValidateCode
 
     @Override
     protected void send(ServletWebRequest request, ValidateCode smsCode) throws Exception {
-        String mobile = ServletRequestUtils.getRequiredStringParameter((ServletRequest)request,"moblie");
+        String mobile = ServletRequestUtils.getRequiredStringParameter(request.getRequest(),"mobile");
         smsCodeSender.send(mobile,smsCode.getCode());
     }
 }

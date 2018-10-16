@@ -1,6 +1,8 @@
 package com.zjx.security.browser;
 
+import com.zjx.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.zjx.security.core.properties.SecurityProperties;
+import com.zjx.security.core.validate.code.SmsCodeFilter;
 import com.zjx.security.core.validate.code.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +45,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -66,8 +71,15 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         validateCodeFilter.setSecurityProperties(securityProperties);
         //为validateCodeFilter初始化过滤url
         validateCodeFilter.afterPropertiesSet();
+
+        SmsCodeFilter smsCodeFilter = new SmsCodeFilter();
+        smsCodeFilter.setAuthenticationFailureHandler(myAuthenticationFailureHandler);
+        smsCodeFilter.setSecurityProperties(securityProperties);
+        smsCodeFilter.afterPropertiesSet();
+
         //http.httpBasic()//使用http默认登录方式
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(smsCodeFilter,UsernamePasswordAuthenticationFilter.class)
                 .formLogin()//使用表单登录方式
                     .loginPage("/authentication/require")//指定登录控制器
                     .loginProcessingUrl("/authentication/form")//指定登录提交表单请求
@@ -88,6 +100,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                     .authenticated()//都需要身份认证
                     .and()
                 .csrf()
-                    .disable();//关闭csrf跨站请求伪造防护功能
+                    .disable()//关闭csrf跨站请求伪造防护功能
+                .apply(smsCodeAuthenticationSecurityConfig);//加入其它配置
     }
 }
