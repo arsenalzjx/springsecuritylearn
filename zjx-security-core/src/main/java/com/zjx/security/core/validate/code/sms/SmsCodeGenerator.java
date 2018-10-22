@@ -14,7 +14,7 @@ import org.springframework.web.context.request.ServletWebRequest;
  * <p>@Author: zjx</p>
  * <p>@Date: 2018/10/10 15:05</p>
  */
-@Component("smsCodeGenerator")
+@Component("smsValidateCodeGenerator")
 public class SmsCodeGenerator implements ValidateCodeGenerator {
 
     @Autowired

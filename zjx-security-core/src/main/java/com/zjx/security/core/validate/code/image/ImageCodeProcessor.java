@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
  * <p>@Author: zjx</p>
  * <p>@Date: 2018/10/15 10:38</p>
  */
-@Component("imageCodeProcessor")
+@Component("imageValidateCodeProcessor")
 public class ImageCodeProcessor extends AbstractValidateCodeProcessor<ImageCode> {
     @Override
     protected void send(ServletWebRequest request, ImageCode imageCode) throws Exception {

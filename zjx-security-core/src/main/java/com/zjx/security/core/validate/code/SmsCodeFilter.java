@@ -81,7 +81,7 @@ public class SmsCodeFilter extends OncePerRequestFilter {
         if (codeInSession == null) {
             throw new ValidateCodeException("验证码不存在");
         }
-        if (codeInSession.isExpride()) {
+        if (codeInSession.isExpried()) {
             sessionStrategy.removeAttribute(request, ValidateCodeProcessor.SESSION_KEY_PREFIX+"SMS");
             throw new ValidateCodeException("验证码已过期");
         }

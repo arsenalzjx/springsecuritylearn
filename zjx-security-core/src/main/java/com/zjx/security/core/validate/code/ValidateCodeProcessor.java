@@ -23,4 +23,13 @@ public interface ValidateCodeProcessor {
      * @return void
      **/
     void create(ServletWebRequest request) throws Exception;
+
+    /**
+     * @Author: zjx
+     * @Description: 校验验证码
+     * @Date 14:34 2018/10/17
+     * @Param [servletWebRequest]
+     * @return void
+     **/
+    void validate(ServletWebRequest servletWebRequest);
 }

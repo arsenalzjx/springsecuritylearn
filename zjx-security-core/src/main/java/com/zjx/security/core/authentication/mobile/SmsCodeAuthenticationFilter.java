@@ -1,5 +1,6 @@
 package com.zjx.security.core.authentication.mobile;
 
+import com.zjx.security.core.properties.SecurityConstants;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -20,16 +21,15 @@ public class SmsCodeAuthenticationFilter extends
     // ~ Static fields/initializers
     // =====================================================================================
 
-    public static final String ZJX_FORM_MOBILE_KEY = "mobile";
 
-    private String mobileParameter = ZJX_FORM_MOBILE_KEY;
+    private String mobileParameter = SecurityConstants.DEFAULT_PARAMETER_NAME_MOBILE;
     private boolean postOnly = true;
 
     // ~ Constructors
     // ===================================================================================================
 
     public SmsCodeAuthenticationFilter() {
-        super(new AntPathRequestMatcher("/authentication/mobile", "POST"));
+        super(new AntPathRequestMatcher(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE, "POST"));
     }
 
     // ~ Methods

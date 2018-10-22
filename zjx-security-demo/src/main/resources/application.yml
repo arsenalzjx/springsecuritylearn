@@ -6,9 +6,9 @@ spring:
     password: lawpress
   session:
     store-type: none
-security:
-  basic:
-    enabled: true
+#security:
+#  basic:
+#    enabled: false
 
 #zjx:
 #  security:

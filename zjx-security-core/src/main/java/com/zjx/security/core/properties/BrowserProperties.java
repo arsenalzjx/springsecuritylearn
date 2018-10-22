@@ -7,7 +7,7 @@ package com.zjx.security.core.properties;
  * <p>@Date: 2018/10/8 10:08</p>
  */
 public class BrowserProperties {
-    private String loginPage = "/zjx-signIn.html";
+    private String loginPage = SecurityConstants.DEFAULT_LOGIN_PAGE_URL;
 
     private LoginType loginType = LoginType.JSON;
 
