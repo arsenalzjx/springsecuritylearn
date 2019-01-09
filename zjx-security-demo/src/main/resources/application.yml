@@ -18,6 +18,9 @@ zjx:
       qq:
         app-id: 101537529
         app-secret: 6ed14dbea588018f72b53d1428437710
+      weixin:
+        app-id:
+        app-secret:
     browser:
       signUpUrl: /demo-signUp.html
 #      loginPage: /demo-signIn.html

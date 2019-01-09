@@ -10,6 +10,16 @@ public class SocialProperties {
 
     private QQProperties qq = new QQProperties();
 
+    private WeiXinProperties weixin = new WeiXinProperties();
+
+    public WeiXinProperties getWeixin() {
+        return weixin;
+    }
+
+    public void setWeixin(WeiXinProperties weixin) {
+        this.weixin = weixin;
+    }
+
     public String getFilterProcessesUrl() {
         return filterProcessesUrl;
     }
