@@ -1,6 +1,7 @@
 package com.zjx.security.browser;
 
 import com.zjx.security.browser.support.SimpleResponse;
+import com.zjx.security.browser.support.SocialUserInfo;
 import com.zjx.security.core.properties.SecurityProperties;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -12,19 +13,22 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.web.ProviderSignInUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * <p>@ClassName: BrowserSecurityController </p>
- * <p>@Description: </p>
- * <p>@Author: zjx</p>
- * <p>@Date: 2018/10/8 8:41</p>
+ * 处理关于登录授权跳转相关的url
+ * @author: zjx
+ * @date: 2018/10/8 8:41
  */
 @RestController
 public class BrowserSecurityController {
@@ -38,6 +42,12 @@ public class BrowserSecurityController {
 
     @Autowired
     private SecurityProperties securityProperties;
+
+    /**
+     * 处理第三方登录寄存信息
+     */
+    @Autowired
+    private ProviderSignInUtils providerSignInUtils;
 
     /**
      * @Author: zjx
@@ -63,5 +73,25 @@ public class BrowserSecurityController {
         }
         //如果不是html请求返回json字符串
         return new SimpleResponse("访问的服务需要身份认证,请引导用户到登录页");
+    }
+
+    /**
+     * 从session中获取第三方用户信息
+     * @author: zjx
+     * @date 14:48 2019/1/8
+     * @param request
+     * @return com.zjx.security.browser.support.SocialUserInfo
+     **/
+    @GetMapping("/social/user")
+    public SocialUserInfo getSocialUserInfo(HttpServletRequest request){
+        SocialUserInfo userinfo = new SocialUserInfo();
+        //获取到用户相对应的第三方平台用户信息
+        Connection<?> connection = providerSignInUtils.getConnectionFromSession(new ServletWebRequest(request));
+        //从临时数据中补全信息
+        userinfo.setProviderId(connection.getKey().getProviderId());
+        userinfo.setProviderUserId(connection.getKey().getProviderUserId());
+        userinfo.setNickname(connection.getDisplayName());
+        userinfo.setHeadimg(connection.getImageUrl());
+        return userinfo;
     }
 }

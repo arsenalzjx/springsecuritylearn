@@ -10,9 +10,16 @@ spring:
 #  basic:
 #    enabled: false
 
-#zjx:
-#  security:
-#    browser:
+
+zjx:
+  security:
+    social:
+      filterProcessesUrl: /auth
+      qq:
+        app-id: 101537529
+        app-secret: 6ed14dbea588018f72b53d1428437710
+    browser:
+      signUpUrl: /demo-signUp.html
 #      loginPage: /demo-signIn.html
 #      loginType: REDIRECT
 #    code:

@@ -1,10 +1,8 @@
 package com.zjx.security.browser.support;
 
 /**
- * <p>@ClassName: SimpleResponse </p>
- * <p>@Description: </p>
- * <p>@Author: zjx</p>
- * <p>@Date: 2018/10/8 9:53</p>
+ * @author: zjx
+ * @date: 2018/10/8 9:53
  */
 public class SimpleResponse {
     private Object content;

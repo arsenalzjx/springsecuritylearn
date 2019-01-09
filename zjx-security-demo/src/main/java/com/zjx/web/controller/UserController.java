@@ -7,28 +7,51 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.ServletWebRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>@ClassName: UserController </p>
- * <p>@Description: </p>
- * <p>@Author: zjx</p>
- * <p>@Date: 2018/9/19 15:50</p>
+ * 用户相关Controller
+ * @author: zjx
+ * @date: 2018/9/19 15:50
  */
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
+    /**
+     * 注入第三方登录工具类
+     */
+    @Autowired
+    private ProviderSignInUtils providerSignInUtils;
+
+    /**
+     * 注册用户方法
+     * @author: zjx
+     * @date 13:47 2019/1/8
+     * @param user 封装了注册信息的对象
+     * @param request 注入请求相关信息
+     * @return void
+     **/
+    @PostMapping("/regist")
+    public void regist(User user, HttpServletRequest request){
+        //不管是注册还是绑定都会填写的用户唯一标识
+        String userId = user.getUsername();
+        providerSignInUtils.doPostSignUp(userId, new ServletWebRequest(request));
+    }
 
     @GetMapping("/me")
     public Object getCurrentUser(@AuthenticationPrincipal UserDetails user){
