@@ -28,7 +28,7 @@ public class WeiXinImpl extends AbstractOAuth2ApiBinding implements WeiXin {
      * @date 20:02 2019/1/9
      * @param accessToken 微信所给令牌
      **/
-    protected WeiXinImpl(String accessToken) {
+    public WeiXinImpl(String accessToken) {
         super(accessToken, TokenStrategy.ACCESS_TOKEN_PARAMETER);
     }
 
