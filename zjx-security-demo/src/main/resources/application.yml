@@ -1,3 +1,6 @@
+server:
+  port: 80
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -14,13 +17,14 @@ spring:
 zjx:
   security:
     social:
-      filterProcessesUrl: /auth
+      filterProcessesUrl: /qqLogin
       qq:
         app-id: 101537529
         app-secret: 6ed14dbea588018f72b53d1428437710
+        providerId: callback.do
       weixin:
-        app-id:
-        app-secret:
+        app-id: wxd99431bbff8305a0
+        app-secret: 60f78681d063590a469f1b297feff3c4
     browser:
       signUpUrl: /demo-signUp.html
 #      loginPage: /demo-signIn.html

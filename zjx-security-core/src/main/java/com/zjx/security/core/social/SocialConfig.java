@@ -89,7 +89,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
      * @author: zjx
      * @date 14:26 2019/1/8
      * @param connectionFactoryLocator 用于获取相应的connectionFactory,由springboot自动装配
-     * @return org.springframework.social.connect.web.ProviderSignInUtils
+     * @return org.springframework.social.connect.web.ProviderSi gnInUtils
      **/
     @Bean
     public ProviderSignInUtils providerSignInUtils(ConnectionFactoryLocator connectionFactoryLocator){

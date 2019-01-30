@@ -1,11 +1,17 @@
 package com.zjx.security.core.social.weixin.api;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
 import org.springframework.social.oauth2.TokenStrategy;
+
+import java.nio.charset.Charset;
+import java.util.List;
 
 /**
  * @author: zjx
@@ -30,6 +36,8 @@ public class WeiXinImpl extends AbstractOAuth2ApiBinding implements WeiXin {
      **/
     public WeiXinImpl(String accessToken) {
         super(accessToken, TokenStrategy.ACCESS_TOKEN_PARAMETER);
+        //在值转换为对象时,如果有对应的值没有找到对应的属性时不报错
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
     }
 
     /**
@@ -38,13 +46,13 @@ public class WeiXinImpl extends AbstractOAuth2ApiBinding implements WeiXin {
      * @date 20:52 2019/1/9
      * @return java.util.List<org.springframework.http.converter.HttpMessageConverter<?>>
      **/
-    /*@Override
+    @Override
     protected List<HttpMessageConverter<?>> getMessageConverters() {
         List<HttpMessageConverter<?>> messageConverters = super.getMessageConverters();
-        messageConverters.remove(1);
+        messageConverters.remove(0);
         messageConverters.add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
         return messageConverters;
-    }*/
+    }
 
     @Override
     public WeiXinUserInfo getUserInfo(String openId) {

@@ -2,14 +2,13 @@ package com.zjx.security;
 
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
-import org.springframework.stereotype.Component;
 
 /**
  * 自定义ConnectionSignUp,当获取到第三方登录信息后自动生成一个用户进行绑定
  * @author: zjx
  * @date: 2019/1/9 9:13
  */
-@Component
+//@Component
 public class DemoConnectionSignUp implements ConnectionSignUp {
 
     /**

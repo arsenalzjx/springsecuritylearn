@@ -36,11 +36,16 @@ public class WeiXinUserInfo {
     /**
      * 	用户特权信息，json数组，如微信沃卡用户为（chinaunicom）
      */
-    private String privilege;
+    private String[] privilege;
     /**
      * 	用户统一标识。针对一个微信开放平台帐号下的应用，同一用户的unionid是唯一的。
      */
     private String unionid;
+
+    /**
+     * api文档中没有,但返回结果中有
+     */
+    private String language;
 
     public String getOpenid() {
         return openid;
@@ -98,11 +103,11 @@ public class WeiXinUserInfo {
         this.headimgurl = headimgurl;
     }
 
-    public String getPrivilege() {
+    public String[] getPrivilege() {
         return privilege;
     }
 
-    public void setPrivilege(String privilege) {
+    public void setPrivilege(String[] privilege) {
         this.privilege = privilege;
     }
 
@@ -112,5 +117,13 @@ public class WeiXinUserInfo {
 
     public void setUnionid(String unionid) {
         this.unionid = unionid;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

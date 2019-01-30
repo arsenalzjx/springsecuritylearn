@@ -52,6 +52,15 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
         return buildUser(userId);
     }
 
+    /**
+     * 登录验证方法抽取出的公共方法,此处返回为SocialUserDetails而非UserDetails
+     * 是为了可查询相关社交登录信息,如果返回的为Userdetails则因为内部没有查询
+     * userId方法而无法获得用户是否绑定了相应社交账号
+     * @author: zjx
+     * @date 10:06 2019/1/25
+     * @param userId
+     * @return org.springframework.social.security.SocialUserDetails
+     **/
     private SocialUserDetails buildUser(String userId) {
         /*根据用户名查找用户信息
         模拟数据库中取出加密后的密码*/

@@ -1,5 +1,6 @@
 package com.zjx.security.core.social.weixin.connect;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
@@ -61,6 +62,8 @@ public class WeiXinOAuth2Template extends OAuth2Template {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.accessTokenUrl = accessTokenUrl;
+        //在值转换为对象时,如果有对应的值没有找到对应的属性时不报错
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     /**
@@ -76,9 +79,9 @@ public class WeiXinOAuth2Template extends OAuth2Template {
     public AccessGrant exchangeForAccess(String authorizationCode, String redirectUri, MultiValueMap<String, String> additionalParameters) {
         StringBuilder accessTokenRequestUrl = new StringBuilder(accessTokenUrl);
         accessTokenRequestUrl.append("?appid="+clientId);
-        accessTokenRequestUrl.append("&secret+"+clientSecret);
+        accessTokenRequestUrl.append("&secret="+clientSecret);
         accessTokenRequestUrl.append("&code="+authorizationCode);
-        accessTokenRequestUrl.append("grant_type=authorization_code");
+        accessTokenRequestUrl.append("&grant_type=authorization_code");
         accessTokenRequestUrl.append("&redirect_uri="+redirectUri);
         return getAccessToken(accessTokenRequestUrl);
     }
