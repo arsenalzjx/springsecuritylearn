@@ -3,26 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>登录</title>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <!--<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>-->
 </head>
 <body>
 <h2>标准绑定页面</h2>
+<h3>绑定</h3>
 <form action="/connect/weixin" method="post">
     <button type="submit">绑定微信</button>
 </form>
-<button id="unbinding">解除绑定</button>
+
+<h3>解绑</h3>
+<form action="/connect/weixin" method="post">
+    <input type="hidden" name="_method" value="DELETE">
+    <button type="submit">解绑微信</button>
+</form>
 </body>
-<script>
-    $("#unbinding").click(function () {
-        $.ajax({
-            type: "DELETE",
-            url: "/connect/weixin",
-            success: function(msg){
-                if (msg = "success") {
-                    alert("解绑成功");
-                }
-            }
-        });
-    });
-</script>
 </html>

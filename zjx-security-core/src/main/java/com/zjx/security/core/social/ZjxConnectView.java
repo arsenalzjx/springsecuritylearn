@@ -18,8 +18,8 @@ public class ZjxConnectView extends AbstractView {
     protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
                                            HttpServletResponse response) throws Exception {
         if (model.get("connections") == null) {
-            response.setContentType("text/plain;charset=UTF-8");
-            response.getWriter().write("success");
+            response.setContentType("text/html;charset=UTF-8");
+            response.getWriter().write("<h3>解绑成功</h3>");
         } else {
             response.setContentType("text/html;charset=UTF-8");
             response.getWriter().write("<h3>绑定成功</h3>");
