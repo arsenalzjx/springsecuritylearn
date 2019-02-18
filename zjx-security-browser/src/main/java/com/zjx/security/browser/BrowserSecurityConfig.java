@@ -1,5 +1,6 @@
 package com.zjx.security.browser;
 
+import com.zjx.security.browser.session.ZjxExpiredSessionStrategy;
 import com.zjx.security.core.authentication.AbstractChannelSecurityConfig;
 import com.zjx.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.zjx.security.core.properties.SecurityConstants;
@@ -66,36 +67,43 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig{
         //http.httpBasic()使用http默认登录方式
         //应用对应的验证码过滤器配置
         http.apply(validateCodeSecurityConfig)
-                .and()
                 //启用短信验证码登录方式
-                    .apply(smsCodeAuthenticationSecurityConfig)
-                .and()
+                .and().apply(smsCodeAuthenticationSecurityConfig)
                 //启用社交配置,将社交配置加到过滤器链上
-                    .apply(zjxSocialSecurityConfig)
-                .and()
-                    //开启配置rememberMe功能
-                    .rememberMe()
+                .and().apply(zjxSocialSecurityConfig)
+                //开启配置rememberMe功能
+                .and().rememberMe()
                     //选择使用的tokenRepository
                     .tokenRepository(persistentTokenRepository())
                     //配置token过期时间
                     .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
                     //配置后续取得userdetail的服务
                     .userDetailsService(userDetailsService)
-                .and()
-                    //之后的配置都是授权配置
-                    .authorizeRequests()
-                        .antMatchers(
-                                //对跳转到登录页面的请求放行
-                                SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
-                                //对配置中自定义的登录页面进行放行
-                                securityProperties.getBrowser().getLoginPage(),
-                                //对手机登录提交请求放行
-                                SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
-                                //对图形验证码放行
-                                SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
-                                //对注册页面放行
-                                securityProperties.getBrowser().getSignUpUrl(),
-                                "/user/regist")
+                //开启session管理功能配置
+                .and().sessionManagement()
+                    //配置session失效时跳转的地址
+                    .invalidSessionUrl("/session/invalid")
+                    //一个账号的最大登录数
+                    .maximumSessions(1)
+                    //配置当后一个用户挤掉前一个用户时的策略操作
+                    .expiredSessionStrategy(new ZjxExpiredSessionStrategy())
+                    //当达到最大登录数时,是否阻止后续登录
+                    .maxSessionsPreventsLogin(true)
+                    .and()
+                //开启授权配置
+                .and().authorizeRequests()
+                    .antMatchers(
+                            //对跳转到登录页面的请求放行
+                            SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
+                            //对配置中自定义的登录页面进行放行
+                            securityProperties.getBrowser().getLoginPage(),
+                            //对手机登录提交请求放行
+                            SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
+                            //对图形验证码放行
+                            SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
+                            //对注册页面放行
+                            securityProperties.getBrowser().getSignUpUrl(),
+                            "/user/regist","/session/invalid")
                         //使用匹配器将登录页面进行允许访问
                         .permitAll()
                     //对所有请求都验证权限

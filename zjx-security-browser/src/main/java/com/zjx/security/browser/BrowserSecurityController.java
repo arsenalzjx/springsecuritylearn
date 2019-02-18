@@ -94,4 +94,17 @@ public class BrowserSecurityController {
         userinfo.setHeadimg(connection.getImageUrl());
         return userinfo;
     }
+
+    /**
+     * 处理session失效的情况
+     * @author: zjx
+     * @date 15:52 2019/2/15
+     * @return com.zjx.security.browser.support.SimpleResponse
+     **/
+    @GetMapping("/session/invalid")
+    @ResponseStatus(code= HttpStatus.UNAUTHORIZED)
+    public SimpleResponse sessionInvalid(){
+        String message = "session失效";
+        return new SimpleResponse(message);
+    }
 }
