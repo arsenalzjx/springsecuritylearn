@@ -1,6 +1,5 @@
 package com.zjx.security.browser;
 
-import com.zjx.security.browser.session.ZjxExpiredSessionStrategy;
 import com.zjx.security.core.authentication.AbstractChannelSecurityConfig;
 import com.zjx.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.zjx.security.core.properties.SecurityConstants;
@@ -15,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.session.InvalidSessionStrategy;
+import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.sql.DataSource;
@@ -60,6 +61,18 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig{
     @Autowired
     private SpringSocialConfigurer zjxSocialSecurityConfig;
 
+    /**
+     * session并发处理策略
+     */
+    @Autowired
+    private SessionInformationExpiredStrategy sessionInformationExpiredStrategy;
+
+    /**
+     * session过期处理策略
+     */
+    @Autowired
+    private InvalidSessionStrategy invalidSessionStrategy;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //配置使用表单账号密码登录
@@ -81,14 +94,14 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig{
                     .userDetailsService(userDetailsService)
                 //开启session管理功能配置
                 .and().sessionManagement()
-                    //配置session失效时跳转的地址
-                    .invalidSessionUrl("/session/invalid")
+                    //配置session过期处理策略
+                    .invalidSessionStrategy(invalidSessionStrategy)
                     //一个账号的最大登录数
-                    .maximumSessions(1)
-                    //配置当后一个用户挤掉前一个用户时的策略操作
-                    .expiredSessionStrategy(new ZjxExpiredSessionStrategy())
+                    .maximumSessions(securityProperties.getBrowser().getSession().getMaximumSessions())
+                    //session并发策略配置,当后一个用户挤掉前一个用户时的策略操作
+                    .expiredSessionStrategy(sessionInformationExpiredStrategy)
                     //当达到最大登录数时,是否阻止后续登录
-                    .maxSessionsPreventsLogin(true)
+                    .maxSessionsPreventsLogin(securityProperties.getBrowser().getSession().getMaxSessionPreventsLogin())
                     .and()
                 //开启授权配置
                 .and().authorizeRequests()
@@ -103,7 +116,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig{
                             SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
                             //对注册页面放行
                             securityProperties.getBrowser().getSignUpUrl(),
-                            "/user/regist","/session/invalid")
+                            //对session过期页面进行放行
+                            securityProperties.getBrowser().getSession().getSessionInvalidUrl(),
+                            "/user/regist")
                         //使用匹配器将登录页面进行允许访问
                         .permitAll()
                     //对所有请求都验证权限

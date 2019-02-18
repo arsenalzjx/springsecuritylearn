@@ -19,7 +19,15 @@ public class BrowserProperties {
 
     private LoginType loginType = LoginType.JSON;
 
+    /**
+     * '记住我'功能的有效时间，默认1小时
+     */
     private int rememberMeSeconds = 3600;
+
+    /**
+     * session管理配置项
+     */
+    private SessionProperties session = new SessionProperties();
 
     public String getSignUpUrl() {
         return signUpUrl;
@@ -51,5 +59,13 @@ public class BrowserProperties {
 
     public void setRememberMeSeconds(int rememberMeSeconds) {
         this.rememberMeSeconds = rememberMeSeconds;
+    }
+
+    public SessionProperties getSession() {
+        return session;
+    }
+
+    public void setSession(SessionProperties session) {
+        this.session = session;
     }
 }
