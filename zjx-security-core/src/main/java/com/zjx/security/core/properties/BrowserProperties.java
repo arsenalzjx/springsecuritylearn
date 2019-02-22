@@ -17,6 +17,8 @@ public class BrowserProperties {
      */
     private String loginPage = SecurityConstants.DEFAULT_LOGIN_PAGE_URL;
 
+    private String signOutUrl;
+
     private LoginType loginType = LoginType.JSON;
 
     /**
@@ -67,5 +69,13 @@ public class BrowserProperties {
 
     public void setSession(SessionProperties session) {
         this.session = session;
+    }
+
+    public String getSignOutUrl() {
+        return signOutUrl;
+    }
+
+    public void setSignOutUrl(String signOutUrl) {
+        this.signOutUrl = signOutUrl;
     }
 }

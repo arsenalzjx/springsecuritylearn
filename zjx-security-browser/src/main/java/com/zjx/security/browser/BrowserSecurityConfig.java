@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.session.InvalidSessionStrategy;
@@ -73,6 +74,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig{
     @Autowired
     private InvalidSessionStrategy invalidSessionStrategy;
 
+    @Autowired
+    private LogoutSuccessHandler logoutSuccessHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //配置使用表单账号密码登录
@@ -103,6 +107,16 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig{
                     //当达到最大登录数时,是否阻止后续登录
                     .maxSessionsPreventsLogin(securityProperties.getBrowser().getSession().getMaxSessionPreventsLogin())
                     .and()
+                //开启退出相关配置
+                .and().logout()
+                    //默认为/logOut
+                    .logoutUrl("/signOut")
+                    //与logoutSuccessHandler()互斥,只能有一个生效,处理退出成功后需要做的操作
+                    //.logoutSuccessUrl("/zjx-logout.html")
+                    //指定退出成功处理器
+                    .logoutSuccessHandler(logoutSuccessHandler)
+                    //指定删除相关cookies
+                    .deleteCookies("JSESSIONID")
                 //开启授权配置
                 .and().authorizeRequests()
                     .antMatchers(
@@ -118,6 +132,8 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig{
                             securityProperties.getBrowser().getSignUpUrl(),
                             //对session过期页面进行放行
                             securityProperties.getBrowser().getSession().getSessionInvalidUrl(),
+                            //对退出登录成功页进行放行
+                            securityProperties.getBrowser().getSignOutUrl(),
                             "/user/regist")
                         //使用匹配器将登录页面进行允许访问
                         .permitAll()

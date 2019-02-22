@@ -1,7 +1,7 @@
 server:
   port: 80
   session:
-    timeout: 10
+    timeout: 100
 
 spring:
   datasource:
@@ -10,7 +10,10 @@ spring:
     username: root
     password: lawpress
   session:
-    store-type: none
+    store-type: redis
+  redis:
+    host: 129.0.12.65
+    port: 6379
 #security:
 #  basic:
 #    enabled: false
@@ -29,10 +32,11 @@ zjx:
         app-secret: 60f78681d063590a469f1b297feff3c4
     browser:
       signUpUrl: /demo-signUp.html
+      signOutUrl: /demo-logout.html
 #      loginPage: /demo-signIn.html
 #      loginType: REDIRECT
 #    code:
 #      image:
-#        length: 4
+#        length: 5
 #        width: 100
 #        url: /user/*

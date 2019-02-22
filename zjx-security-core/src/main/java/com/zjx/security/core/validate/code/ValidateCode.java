@@ -1,5 +1,6 @@
 package com.zjx.security.core.validate.code;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
  * <p>@Author: zjx</p>
  * <p>@Date: 2018/10/9 15:55</p>
  */
-public class ValidateCode {
+public class ValidateCode implements Serializable {
     private String code;
 
     private LocalDateTime expireTime;

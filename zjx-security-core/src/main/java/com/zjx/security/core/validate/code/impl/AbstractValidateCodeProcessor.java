@@ -12,10 +12,9 @@ import org.springframework.web.context.request.ServletWebRequest;
 import java.util.Map;
 
 /**
- * <p>@ClassName: AbstractValidateCodeProcessor </p>
- * <p>@Description: </p>
- * <p>@Author: zjx</p>
- * <p>@Date: 2018/10/15 10:05</p>
+ *
+ * @Author: zjx
+ * @Date: 2018/10/15 10:05
  */
 public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> implements ValidateCodeProcessor {
 
@@ -48,15 +47,18 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
         return (C) validateCodeGenerator.generate(request);
     }
 
+
     /**
-     * @Author: zjx
-     * @Description: 保存校验码
-     * @Date 10:44 2018/10/15
-     * @Param [request, validateCode]
+     * 保存校验码
+     * @author: zjx
+     * @date 10:44 2018/10/15
+     * @param request
+     * @param validateCode
      * @return void
      **/
     protected  void save(ServletWebRequest request, C validateCode){
-        sessionStrategy.setAttribute(request,SESSION_KEY_PREFIX+getProcessorType(request).toUpperCase(),validateCode);
+        ValidateCode code = new ValidateCode(validateCode.getCode(), validateCode.getExpireTime());
+        sessionStrategy.setAttribute(request,SESSION_KEY_PREFIX+getProcessorType(request).toUpperCase(),code);
     }
 
 
@@ -98,10 +100,10 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
     }
 
     /**
-     * @Author: zjx
-     * @Description: 根据请求的url获取校验码的类型
-     * @Date 14:37 2018/10/17
-     * @Param [request]
+     * 根据请求的url获取校验码的类型
+     * @author: zjx
+     * @date 14:37 2018/10/17
+     * @param request
      * @return com.zjx.security.core.validate.code.ValidateCodeType
      **/
     private ValidateCodeType getValidateCodeType(ServletWebRequest request) {
@@ -110,22 +112,21 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
     }
 
     /**
-     * @Author: zjx
-     * @Description: 构建验证码放入session时的key
-     * @Date 14:37 2018/10/17
-     * @Param [request]
+     * 构建验证码放入session时的key
+     * @author: zjx
+     * @date 14:37 2018/10/17
+     * @param request
      * @return java.lang.String
      **/
     private String getSessionKey(ServletWebRequest request) {
         return SESSION_KEY_PREFIX + getValidateCodeType(request).toString().toUpperCase();
     }
 
-
     /**
-     * @Author: zjx
-     * @Description: 根据请求的url获取校验码的类型
-     * @Date 10:28 2018/10/15
-     * @Param [request]
+     * 根据请求的url获取校验码的类型
+     * @author: zjx
+     * @date 10:28 2018/10/15
+     * @param request
      * @return java.lang.String
      **/
     protected String getProcessorType(ServletWebRequest request){
@@ -133,10 +134,11 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
     }
 
     /**
-     * @Author: zjx
-     * @Description: 发送校验码,由子类具体实现
-     * @Date 10:37 2018/10/15
-     * @Param [request, validateCode]
+     * 发送校验码,由子类具体实现
+     * @author: zjx
+     * @date 10:37 2018/10/15
+     * @param request
+     * @param validateCode
      * @return void
      **/
     protected abstract void send(ServletWebRequest request, C validateCode) throws Exception;
