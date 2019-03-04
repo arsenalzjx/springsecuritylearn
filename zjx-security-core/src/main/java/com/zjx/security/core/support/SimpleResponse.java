@@ -1,4 +1,4 @@
-package com.zjx.security.browser.support;
+package com.zjx.security.core.support;
 
 /**
  * @author: zjx

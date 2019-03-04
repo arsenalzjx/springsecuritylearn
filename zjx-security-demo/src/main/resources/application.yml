@@ -40,3 +40,8 @@ zjx:
 #        length: 5
 #        width: 100
 #        url: /user/*
+security:
+  oauth2:
+    client:
+      client-id: zjx
+      client-secret: zjxsecret

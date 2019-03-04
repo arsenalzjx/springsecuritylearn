@@ -147,17 +147,6 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig{
     }
 
 
-    /**
-     * 注册一个加密器到容器中
-     * @author: zjx
-     * @date 17:31 2019/1/4
-     * @return org.springframework.security.crypto.password.PasswordEncoder
-     **/
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();

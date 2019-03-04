@@ -1,4 +1,4 @@
-package com.zjx.security.browser.authentication;
+package com.zjx.security.app.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zjx.security.core.properties.LoginType;
@@ -43,8 +43,7 @@ public class MyAuthenticationFailureHandler extends SimpleUrlAuthenticationFailu
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(exception.getMessage())));
-        }else {
-            super.onAuthenticationFailure(request,response,exception);
+        }else {            super.onAuthenticationFailure(request,response,exception);
         }
     }
 }

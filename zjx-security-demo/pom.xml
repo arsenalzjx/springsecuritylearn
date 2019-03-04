@@ -16,9 +16,15 @@
 
     <dependencies>
         <!--引入浏览器项目依赖,演示浏览器相关登录功能-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.zjx.security</groupId>
             <artifactId>zjx-security-browser</artifactId>
+            <version>${zjx.security.version}</version>
+        </dependency>-->
+        <!--引入app项目依赖-->
+        <dependency>
+            <groupId>com.zjx.security</groupId>
+            <artifactId>zjx-security-app</artifactId>
             <version>${zjx.security.version}</version>
         </dependency>
 

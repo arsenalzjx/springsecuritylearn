@@ -1,8 +1,8 @@
 package com.zjx.security.browser;
 
-import com.zjx.security.browser.support.SimpleResponse;
 import com.zjx.security.browser.support.SocialUserInfo;
 import com.zjx.security.core.properties.SecurityProperties;
+import com.zjx.security.core.support.SimpleResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
