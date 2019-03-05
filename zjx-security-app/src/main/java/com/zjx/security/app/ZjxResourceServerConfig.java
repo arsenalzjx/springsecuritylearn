@@ -3,6 +3,7 @@ package com.zjx.security.app;
 import com.zjx.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.zjx.security.core.properties.SecurityConstants;
 import com.zjx.security.core.properties.SecurityProperties;
+import com.zjx.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,6 +34,9 @@ public class ZjxResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
 
+    @Autowired
+    private ValidateCodeSecurityConfig validateCodeSecurityConfig;
+
     /**
      * 注入社交配置类
      */
@@ -61,9 +65,9 @@ public class ZjxResourceServerConfig extends ResourceServerConfigurerAdapter {
 
         //http.httpBasic()使用http默认登录方式
         //应用对应的验证码过滤器配置
-        http//.apply(validateCodeSecurityConfig)
+        http.apply(validateCodeSecurityConfig)
                 //启用短信验证码登录方式
-                //.and()
+                .and()
                 .apply(smsCodeAuthenticationSecurityConfig)
                 //启用社交配置,将社交配置加到过滤器链上
                 .and().apply(zjxSocialSecurityConfig)
