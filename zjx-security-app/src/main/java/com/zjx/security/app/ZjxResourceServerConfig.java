@@ -1,5 +1,6 @@
 package com.zjx.security.app;
 
+import com.zjx.security.app.social.openid.OpenIdAuthenticationSecurityConfig;
 import com.zjx.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.zjx.security.core.properties.SecurityConstants;
 import com.zjx.security.core.properties.SecurityProperties;
@@ -49,14 +50,20 @@ public class ZjxResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private SecurityProperties securityProperties;
 
+    /**
+     * 注入OpenId登录相关安全配置
+     */
+    @Autowired
+    private OpenIdAuthenticationSecurityConfig openIdAuthenticationSecurityConfig;
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
 
         //使用表单登录方式
         http.formLogin()
-                //指定进入登录页面的uri
+                //指定进入登录页面的url
                 .loginPage(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
-                //指定登录提交表单请求uri
+                //指定登录提交表单请求url
                 .loginProcessingUrl(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM)
                 //指定登录成功后的处理器
                 .successHandler(myAuthenticationSuccessHandler)
@@ -71,6 +78,8 @@ public class ZjxResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .apply(smsCodeAuthenticationSecurityConfig)
                 //启用社交配置,将社交配置加到过滤器链上
                 .and().apply(zjxSocialSecurityConfig)
+                //启用openId方式登录配置
+                .and().apply(openIdAuthenticationSecurityConfig)
                 //开启授权配置
                 .and().authorizeRequests()
                 .antMatchers(
@@ -80,6 +89,8 @@ public class ZjxResourceServerConfig extends ResourceServerConfigurerAdapter {
                         securityProperties.getBrowser().getLoginPage(),
                         //对手机登录提交请求放行
                         SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
+                        //OpenId登录进行放行
+                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_OPENID,
                         //对图形验证码放行
                         SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
                         //对注册页面放行

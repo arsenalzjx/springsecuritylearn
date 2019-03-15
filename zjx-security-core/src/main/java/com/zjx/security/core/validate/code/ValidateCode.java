@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * <p>@ClassName: ValidateCode </p>
- * <p>@Description: </p>
- * <p>@Author: zjx</p>
- * <p>@Date: 2018/10/9 15:55</p>
+ * @Author: zjx
+ * @Date: 2018/10/9 15:55
  */
 public class ValidateCode implements Serializable {
     private String code;
