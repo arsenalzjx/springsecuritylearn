@@ -18,10 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * <p>@ClassName: MyAuthenticationFailureHandler </p>
- * <p>@Description: </p>
- * <p>@Author: zjx</p>
- * <p>@Date: 2018/10/9 9:15</p>
+ * @Author: zjx
+ * @Date: 2018/10/9 9:15
  */
 @Component
 public class MyAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {

@@ -16,10 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * <p>@ClassName: MyAuthenticationSuccessHandler </p>
- * <p>@Description: </p>
- * <p>@Author: zjx</p>
- * <p>@Date: 2018/10/8 18:18</p>
+ * @Author: zjx
+ * @Date: 2018/10/8 18:18
  */
 @Component
 public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {

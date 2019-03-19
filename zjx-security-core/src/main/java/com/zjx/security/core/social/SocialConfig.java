@@ -40,6 +40,12 @@ public class SocialConfig extends SocialConfigurerAdapter {
     private SecurityProperties securityProperties;
 
     /**
+     * 注入后处理器
+     */
+    @Autowired(required = false)
+    private SocialAuthenticationFilterPostProcessor socialAuthenticationFilterPostProcessor;
+
+    /**
      * 通过社交连接生成用户的工具类,此功能交由其他应用端自定义
      * 处理,所以此处不一定会有该工具类注册到容器
      */
@@ -80,6 +86,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
         //将filterProcessesUrl从属性配置文件中取出,用于自定义构造SpringSocialConfigurer到容器中
         String filterProcessesUrl = securityProperties.getSocial().getFilterProcessesUrl();
         ZjxSpringSocialConfigurer configurer = new ZjxSpringSocialConfigurer(filterProcessesUrl);
+        configurer.setSocialAuthenticationFilterPostProcessor(socialAuthenticationFilterPostProcessor);
         configurer.signupUrl(securityProperties.getBrowser().getSignUpUrl());
         return configurer;
     }
