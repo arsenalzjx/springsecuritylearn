@@ -3,6 +3,7 @@ package com.zjx.web.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.zjx.dto.User;
 import com.zjx.dto.UserQueryCondition;
+import com.zjx.security.app.social.AppSignUpUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
@@ -38,6 +39,9 @@ public class UserController {
     @Autowired
     private ProviderSignInUtils providerSignInUtils;
 
+    @Autowired
+    private AppSignUpUtils appSignUpUtils;
+
     /**
      * 注册用户方法
      * @author: zjx
@@ -50,7 +54,10 @@ public class UserController {
     public void regist(User user, HttpServletRequest request){
         //不管是注册还是绑定都会填写的用户唯一标识
         String userId = user.getUsername();
-        providerSignInUtils.doPostSignUp(userId, new ServletWebRequest(request));
+        //浏览器模式下使用
+//        providerSignInUtils.doPostSignUp(userId, new ServletWebRequest(request));
+         //app模式下使用
+        appSignUpUtils.doPostSignUp(new ServletWebRequest(request), userId);
     }
 
     @GetMapping("/me")

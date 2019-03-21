@@ -1,6 +1,6 @@
 package com.zjx.security.browser;
 
-import com.zjx.security.browser.support.SocialUserInfo;
+import com.zjx.security.core.support.SocialUserInfo;
 import com.zjx.security.core.properties.SecurityProperties;
 import com.zjx.security.core.support.SimpleResponse;
 import org.apache.commons.lang.StringUtils;
@@ -80,7 +80,7 @@ public class BrowserSecurityController {
      * @author: zjx
      * @date 14:48 2019/1/8
      * @param request
-     * @return com.zjx.security.browser.support.SocialUserInfo
+     * @return com.zjx.security.core.support.SocialUserInfo
      **/
     @GetMapping("/social/user")
     public SocialUserInfo getSocialUserInfo(HttpServletRequest request){

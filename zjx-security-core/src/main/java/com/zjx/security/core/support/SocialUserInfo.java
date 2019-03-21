@@ -1,4 +1,4 @@
-package com.zjx.security.browser.support;
+package com.zjx.security.core.support;
 
 /**
  * 封装第三方登录应用信息,用于使用第三方登录时绑定和注册系统用户

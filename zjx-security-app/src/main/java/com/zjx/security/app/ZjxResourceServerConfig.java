@@ -99,7 +99,10 @@ public class ZjxResourceServerConfig extends ResourceServerConfigurerAdapter {
                         securityProperties.getBrowser().getSession().getSessionInvalidUrl(),
                         //对退出登录成功页进行放行
                         securityProperties.getBrowser().getSignOutUrl(),
-                        "/user/regist")
+                        //对配置的注册请求放行
+                        "/user/regist",
+                        //app为第一次登录时进入的注册或绑定请求
+                        "/social/signUp")
                 //使用匹配器将登录页面进行允许访问
                 .permitAll()
                 //对所有请求都验证权限

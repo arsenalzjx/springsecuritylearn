@@ -8,10 +8,8 @@ import javax.validation.constraints.Past;
 import java.util.Date;
 
 /**
- * <p>@ClassName: User </p>
- * <p>@Description: </p>
- * <p>@Author: zjx</p>
- * <p>@Date: 2018/9/19 16:03</p>
+ * @Author: zjx
+ * @Date: 2018/9/19 16:03
  */
 public class User {
     public interface UserSimpleView {
