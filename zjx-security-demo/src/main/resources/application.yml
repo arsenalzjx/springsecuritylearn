@@ -40,8 +40,28 @@ zjx:
 #        length: 5
 #        width: 100
 #        url: /user/*
-security:
-  oauth2:
-    client:
-      client-id: zjx
-      client-secret: zjxsecret
+    o-auth2:
+      clients[0]:
+        clientId: zjx
+        clientSecret: zjxsecret
+        accessTokenValiditySeconds: 3600
+        authorizedGrantTypes[0]: refresh_token
+        authorizedGrantTypes[1]: password
+        scopes[0]: all
+        scopes[1]: read
+        scopes[2]: write
+      clients[1]:
+        clientId: test
+        clientSecret: test
+#        accessTokenValiditySeconds: 3600
+        authorizedGrantTypes[0]: refresh_token
+        authorizedGrantTypes[1]: password
+        scopes[0]: all
+        scopes[1]: read
+        scopes[2]: write
+
+#security:
+#  oauth2:
+#    client:
+#      client-id: zjx
+#      client-secret: zjxsecret
