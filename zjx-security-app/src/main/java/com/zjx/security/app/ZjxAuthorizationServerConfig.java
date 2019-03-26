@@ -12,7 +12,13 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author: zjx
@@ -34,6 +40,12 @@ public class ZjxAuthorizationServerConfig extends AuthorizationServerConfigurerA
     @Autowired
     private TokenStore tokenStore;
 
+    @Autowired(required = false)
+    private JwtAccessTokenConverter jwtAccessTokenConverter;
+
+    @Autowired(required = false)
+    private TokenEnhancer jwtTokenEnhancer;
+
     /**
      * 关于endpoint的相关配置
      * @author: zjx
@@ -46,6 +58,16 @@ public class ZjxAuthorizationServerConfig extends AuthorizationServerConfigurerA
         endpoints.tokenStore(tokenStore)
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService);
+        if (jwtAccessTokenConverter != null && jwtTokenEnhancer != null) {
+            TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+            List<TokenEnhancer> enhancers = new ArrayList<>();
+            enhancers.add(jwtTokenEnhancer);
+            enhancers.add(jwtAccessTokenConverter);
+            enhancerChain.setTokenEnhancers(enhancers);
+            endpoints
+                    .tokenEnhancer(enhancerChain)
+                    .accessTokenConverter(jwtAccessTokenConverter);
+        }
     }
 
 
@@ -71,6 +93,8 @@ public class ZjxAuthorizationServerConfig extends AuthorizationServerConfigurerA
                         .accessTokenValiditySeconds(config.getAccessTokenValiditySeconds())
                         //支持的认证模式("refresh_token","password","implicit","authorization_code","client_credentials")
                         .authorizedGrantTypes(config.getAuthorizedGrantTypes())
+                        //刷新token的有效时间
+                        .refreshTokenValiditySeconds(108000)
                         //可使用权限,如果此处配置,则认证时的请求只可在这个范围内的,超出范围则报错,如果没带scope,则用该处配置的scope
                         .scopes(config.getScopes());
             }

@@ -4,15 +4,20 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.zjx.dto.User;
 import com.zjx.dto.UserQueryCondition;
 import com.zjx.security.app.social.AppSignUpUtils;
+import com.zjx.security.core.properties.SecurityProperties;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -33,6 +38,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
     /**
      * 注入第三方登录工具类
      */
@@ -41,6 +47,9 @@ public class UserController {
 
     @Autowired
     private AppSignUpUtils appSignUpUtils;
+    
+    @Autowired
+    private SecurityProperties securityProperties;
 
     /**
      * 注册用户方法
@@ -61,7 +70,13 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public Object getCurrentUser(@AuthenticationPrincipal UserDetails user){
+    public Object getCurrentUser(Authentication user,HttpServletRequest request) throws Exception{
+        String header = request.getHeader("Authorization");
+        String token = StringUtils.substringAfter(header, "bearer ");
+        Claims claims = Jwts.parser().setSigningKey(securityProperties.getoAuth2().getJwtSigningKey().getBytes("UTF-8"))
+                .parseClaimsJws(token).getBody();
+        String company = (String) claims.get("company");
+        logger.info("令牌中的company参数为-->" + company);
         return user;
     }
 

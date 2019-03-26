@@ -6,6 +6,14 @@ package com.zjx.security.core.properties;
  */
 public class OAuth2Properties {
 
+    /**
+     * jwt令牌签名秘钥
+     */
+    private String jwtSigningKey = "zjx";
+
+    /**
+     * 客户端配置
+     */
     private OAuth2ClientProperties[] clients = {};
 
     public OAuth2ClientProperties[] getClients() {
@@ -14,5 +22,13 @@ public class OAuth2Properties {
 
     public void setClients(OAuth2ClientProperties[] clients) {
         this.clients = clients;
+    }
+
+    public String getJwtSigningKey() {
+        return jwtSigningKey;
+    }
+
+    public void setJwtSigningKey(String jwtSigningKey) {
+        this.jwtSigningKey = jwtSigningKey;
     }
 }
