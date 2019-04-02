@@ -16,17 +16,17 @@
 
     <dependencies>
         <!--引入浏览器项目依赖,演示浏览器相关登录功能-->
-        <!--<dependency>
+        <dependency>
             <groupId>com.zjx.security</groupId>
             <artifactId>zjx-security-browser</artifactId>
             <version>${zjx.security.version}</version>
-        </dependency>-->
+        </dependency>
         <!--引入app项目依赖-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.zjx.security</groupId>
             <artifactId>zjx-security-app</artifactId>
             <version>${zjx.security.version}</version>
-        </dependency>
+        </dependency>-->
 
         <!--添加测试依赖,写测试用例-->
         <dependency>

@@ -8,10 +8,9 @@ import com.zjx.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
@@ -135,9 +134,13 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig{
                             //对退出登录成功页进行放行
                             securityProperties.getBrowser().getSignOutUrl(),
                             "/user/regist")
-                        //使用匹配器将登录页面进行允许访问
+                        //使用匹配器将匹配页面进行允许访问
                         .permitAll()
-                    //对所有请求都验证权限
+                //匹配某些Url
+                    .antMatchers(HttpMethod.GET,"/user/*")
+                        //要求有ADMIN权限才能访问
+                        .hasRole("ADMIN")
+                    //对其他所有请求都要求登录才可以访问
                     .anyRequest()
                     //都需要身份认证
                     .authenticated()

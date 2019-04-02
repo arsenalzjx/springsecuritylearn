@@ -3,7 +3,6 @@ package com.zjx.web.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.zjx.dto.User;
 import com.zjx.dto.UserQueryCondition;
-import com.zjx.security.app.social.AppSignUpUtils;
 import com.zjx.security.core.properties.SecurityProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -45,8 +44,8 @@ public class UserController {
     @Autowired
     private ProviderSignInUtils providerSignInUtils;
 
-    @Autowired
-    private AppSignUpUtils appSignUpUtils;
+//    @Autowired
+//    private AppSignUpUtils appSignUpUtils;
     
     @Autowired
     private SecurityProperties securityProperties;
@@ -64,9 +63,9 @@ public class UserController {
         //不管是注册还是绑定都会填写的用户唯一标识
         String userId = user.getUsername();
         //浏览器模式下使用
-//        providerSignInUtils.doPostSignUp(userId, new ServletWebRequest(request));
+        providerSignInUtils.doPostSignUp(userId, new ServletWebRequest(request));
          //app模式下使用
-        appSignUpUtils.doPostSignUp(new ServletWebRequest(request), userId);
+//        appSignUpUtils.doPostSignUp(new ServletWebRequest(request), userId);
     }
 
     @GetMapping("/me")
@@ -135,7 +134,7 @@ public class UserController {
     @GetMapping("/{id:\\d+}")
     @JsonView(User.UserdetailView.class)
     public User getInfo(@PathVariable @ApiParam(value = "用户ID") String id) {
-        System.out.println("进入getInfo服务");
+        logger.info("进入getInfo服务");
         User user = new User();
         user.setUsername("tom");
         return user;

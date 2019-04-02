@@ -78,7 +78,7 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
                 //没被锁定
                 ,true
                 //该工具将以逗号为拆分符转换成权限对象
-                , AuthorityUtils.commaSeparatedStringToAuthorityList("admin,ROLE_USER")
+                , AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN,ROLE_USER")
         );
     }
 }
