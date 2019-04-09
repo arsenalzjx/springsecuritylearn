@@ -2,6 +2,7 @@ package com.zjx.security.app;
 
 import com.zjx.security.app.social.openid.OpenIdAuthenticationSecurityConfig;
 import com.zjx.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.zjx.security.core.authorize.AuthorizeConfigManager;
 import com.zjx.security.core.properties.SecurityConstants;
 import com.zjx.security.core.properties.SecurityProperties;
 import com.zjx.security.core.validate.code.ValidateCodeSecurityConfig;
@@ -56,6 +57,9 @@ public class ZjxResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private OpenIdAuthenticationSecurityConfig openIdAuthenticationSecurityConfig;
 
+    @Autowired
+    private AuthorizeConfigManager authorizeConfigManager;
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
 
@@ -80,37 +84,9 @@ public class ZjxResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and().apply(zjxSocialSecurityConfig)
                 //启用openId方式登录配置
                 .and().apply(openIdAuthenticationSecurityConfig)
-                //开启授权配置
-                .and().authorizeRequests()
-                .antMatchers(
-                        //对跳转到登录页面的请求放行
-                        SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
-                        //对配置中自定义的登录页面进行放行
-                        securityProperties.getBrowser().getLoginPage(),
-                        //对手机登录提交请求放行
-                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
-                        //OpenId登录进行放行
-                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_OPENID,
-                        //对图形验证码放行
-                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
-                        //对注册页面放行
-                        securityProperties.getBrowser().getSignUpUrl(),
-                        //对session过期页面进行放行
-                        securityProperties.getBrowser().getSession().getSessionInvalidUrl(),
-                        //对退出登录成功页进行放行
-                        securityProperties.getBrowser().getSignOutUrl(),
-                        //对配置的注册请求放行
-                        "/user/regist",
-                        //app为第一次登录时进入的注册或绑定请求
-                        "/social/signUp")
-                //使用匹配器将登录页面进行允许访问
-                .permitAll()
-                //对所有请求都验证权限
-                .anyRequest()
-                //都需要身份认证
-                .authenticated()
                 .and()
                 //关闭csrf跨站请求伪造防护功能
                 .csrf().disable();
+        authorizeConfigManager.config(http.authorizeRequests());
     }
 }

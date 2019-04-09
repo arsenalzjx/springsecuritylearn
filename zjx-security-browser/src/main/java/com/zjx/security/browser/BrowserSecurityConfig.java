@@ -2,13 +2,12 @@ package com.zjx.security.browser;
 
 import com.zjx.security.core.authentication.AbstractChannelSecurityConfig;
 import com.zjx.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
-import com.zjx.security.core.properties.SecurityConstants;
+import com.zjx.security.core.authorize.AuthorizeConfigManager;
 import com.zjx.security.core.properties.SecurityProperties;
 import com.zjx.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -76,6 +75,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig{
     @Autowired
     private LogoutSuccessHandler logoutSuccessHandler;
 
+    @Autowired
+    private AuthorizeConfigManager authorizeConfigManager;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //配置使用表单账号密码登录
@@ -116,37 +118,11 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig{
                     .logoutSuccessHandler(logoutSuccessHandler)
                     //指定删除相关cookies
                     .deleteCookies("JSESSIONID")
-                //开启授权配置
-                .and().authorizeRequests()
-                    .antMatchers(
-                            //对跳转到登录页面的请求放行
-                            SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
-                            //对配置中自定义的登录页面进行放行
-                            securityProperties.getBrowser().getLoginPage(),
-                            //对手机登录提交请求放行
-                            SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
-                            //对图形验证码放行
-                            SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
-                            //对注册页面放行
-                            securityProperties.getBrowser().getSignUpUrl(),
-                            //对session过期页面进行放行
-                            securityProperties.getBrowser().getSession().getSessionInvalidUrl(),
-                            //对退出登录成功页进行放行
-                            securityProperties.getBrowser().getSignOutUrl(),
-                            "/user/regist")
-                        //使用匹配器将匹配页面进行允许访问
-                        .permitAll()
-                //匹配某些Url
-                    .antMatchers(HttpMethod.GET,"/user/*")
-                        //要求有ADMIN权限才能访问
-                        .hasRole("ADMIN")
-                    //对其他所有请求都要求登录才可以访问
-                    .anyRequest()
-                    //都需要身份认证
-                    .authenticated()
                 .and()
                     //关闭csrf跨站请求伪造防护功能
                     .csrf().disable();
+        //应用授权配置
+        authorizeConfigManager.config(http.authorizeRequests());
     }
 
 
