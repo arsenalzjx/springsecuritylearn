@@ -15,7 +15,7 @@ public class DemoAuthorizeConfigProvider implements AuthorizeConfigProvider {
 
     @Override
     public void config(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config) {
-        config.antMatchers(HttpMethod.GET,"/user")
+        config.antMatchers(HttpMethod.GET,"/demo.html")
                 .hasRole("ADMIN");
     }
 }
