@@ -3,6 +3,7 @@ package com.zjx.security.core.authorize;
 import com.zjx.security.core.properties.SecurityConstants;
 import com.zjx.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
  * @date: 2019/4/8 14:49
  */
 @Component
+@Order(Integer.MIN_VALUE)
 public class ZjxAuthorizeConfigProvider implements AuthorizeConfigProvider {
 
     @Autowired

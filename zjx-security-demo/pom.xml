@@ -28,6 +28,13 @@
             <version>${zjx.security.version}</version>
         </dependency>-->
 
+        <!--引入权限配置相应模块-->
+        <dependency>
+            <groupId>com.zjx.security</groupId>
+            <artifactId>zjx-security-authorize</artifactId>
+            <version>${zjx.security.version}</version>
+        </dependency>
+
         <!--添加测试依赖,写测试用例-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
